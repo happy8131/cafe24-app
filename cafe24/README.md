@@ -128,14 +128,109 @@ cafe24/
 2. **카페24 구조 이해** (기본 옵션과의 연동)
 3. **디자인** (Figma 시안 참고하되, 안정성 우선)
 
+## 🚀 실행 방법
+
+### 로컬 환경에서 미리보기
+
+개발 중 UI를 로컬 브라우저에서 확인하려면:
+
+1. **`cafe24/src/preview.html` 열기**
+   - 브라우저에서 직접 파일 경로로 열기: `file:///path/to/cafe24/src/preview.html`
+   - 또는 웹 서버 실행 후 접속 (예: `python -m http.server 8000`)
+
+2. **확인 사항**
+   - 8개 옵션 카드가 렌더링되는지 확인
+   - 카드 클릭 → 선택 표시, 토스트 알림 표시
+   - 개발자도구(F12) 콘솔에서 에러 없는지 확인
+
+### 카페24 스마트디자인에 적용
+
+실제 카페24 환경에서 운영하려면:
+
+#### Step 1: 카페24 테스트몰 준비
+```
+docs/phase1-setup-guide.md 참고
+1. 카페24 테스트몰 생성 (3개월 무료)
+2. 상품 등록 및 옵션 설정 (8개 옵션값)
+3. 스마트디자인 편집창 진입
+```
+
+#### Step 2: 파일 삽입
+스마트디자인 `/product/detail.html` 파일에 아래 3개 파일을 모두 포함:
+
+**1) 마크업 추가**
+```html
+<!-- cafe24/src/detail-option.html 내용을 복사하여 삽입 -->
+<!-- 기본 옵션 위에 삽입 권장 -->
+```
+
+**2) 스타일 링크**
+```html
+<link rel="stylesheet" href="cafe24/src/option.css">
+```
+
+**3) 스크립트 로드 (순서 중요!)**
+```html
+<!-- 외부 설정: 옵션 데이터 -->
+<script src="cafe24/config/optionConfig.js"></script>
+
+<!-- JavaScript 로직: 카드 동적 렌더링 -->
+<script src="cafe24/src/option.js"></script>
+```
+
+#### Step 3: 검증
+1. 스토어프론트 상품 상세페이지 접속
+2. 커스텀 옵션 UI 정상 노출 확인
+3. 카드 선택 → 기본 옵션도 동시에 변경되는지 확인
+4. 장바구니 / 바로구매 정상 동작 확인
+
+### 옵션 데이터 수정
+
+옵션명, 가격, 뱃지 등을 변경하려면:
+
+```javascript
+// cafe24/config/optionConfig.js 수정
+const optionConfig = {
+  options: [
+    {
+      id: 1,
+      rawLabel: "10개입_1",  // 카페24 옵션값과 일치해야 함
+      groupKey: "10개입",
+      displayName: "10개입",
+      description: "소규모 패키지",
+      price: 2000,  // 추가 금액
+      badge: "가장 많이 사요",  // null이면 미표시
+      imageSrc: "../img/image.png",  // null이면 placeholder
+      sortOrder: 1,
+    },
+    // ... 나머지 옵션들
+  ],
+  groups: {
+    "10개입": { maxCount: 2 },  // 최대 선택 개수
+    // ...
+  },
+};
+```
+
+상세 가이드: [`docs/phase5-config-guide.md`](docs/phase5-config-guide.md)
+
+---
+
 ## 📋 시작하기
 
-1. **Phase 1 진행**
-   - `docs/phase1-setup-guide.md`를 읽고 카페24 환경 준비
-   - `docs/figma-notes.md`에 Figma 시안 분석 기록
+1. **로컬 프리뷰** (개발 중)
+   - `cafe24/src/preview.html`을 브라우저에서 열어 UI 확인
    
-2. **다음 단계**
-   - Phase 1 완료 후 로드맵에 따라 Phase 2~7 진행
+2. **Phase 1 실행** (카페24 적용 시)
+   - `docs/phase1-setup-guide.md`를 읽고 카페24 환경 준비
+   
+3. **Step 2~3 진행**
+   - 위의 "카페24 스마트디자인에 적용" 참고하여 3개 파일 삽입
+   - 스토어프론트에서 검증
+
+4. **옵션 커스터마이징**
+   - `cafe24/config/optionConfig.js`의 옵션 데이터 수정
+   - 변경사항은 자동으로 UI에 반영됨
 
 ---
 
