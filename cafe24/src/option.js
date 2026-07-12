@@ -267,12 +267,17 @@ const CustomOptionUI = {
 
   syncToDefaultOption(rawLabel) {
     const defaultSelect = document.querySelector('.xans-product-option select');
-    if (!defaultSelect) {
+    if (defaultSelect) {
+      defaultSelect.value = rawLabel;
+      defaultSelect.dispatchEvent(new Event('change', { bubbles: true }));
       return;
     }
 
-    defaultSelect.value = rawLabel;
-    defaultSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    const defaultButton = document.querySelector(`.xans-product-option [data-option-value="${rawLabel}"]`);
+    if (defaultButton) {
+      defaultButton.dispatchEvent(new Event('click', { bubbles: true }));
+      return;
+    }
   },
 
   syncFromDefaultOption() {
@@ -317,10 +322,25 @@ const CustomOptionUI = {
 
   attachEventListeners() {
     // 기본 옵션 변경 감지 (양방향 동기화용, 실 카페24 환경)
+    // select 방식: change 이벤트 감지
     const defaultSelect = document.querySelector('.xans-product-option select');
     if (defaultSelect) {
       defaultSelect.addEventListener('change', () => this.syncFromDefaultOption());
     }
+
+    // 텍스트버튼 방식: click 이벤트 감지 (data-option-value 속성을 가진 모든 버튼)
+    const defaultButtons = document.querySelectorAll('.xans-product-option [data-option-value]');
+    defaultButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const selectedValue = btn.getAttribute('data-option-value');
+        if (selectedValue && !this.state.selectedItems.some(item => item.rawLabel === selectedValue)) {
+          this.addSelectedOption(selectedValue);
+          this.updateSelectedList();
+          this.recalculateTotal();
+          this.updateCardStates();
+        }
+      });
+    });
   },
 };
 

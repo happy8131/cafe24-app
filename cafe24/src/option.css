@@ -535,6 +535,13 @@
   .card-select-btn {
     padding: 6px 12px;
     font-size: 12px;
+    min-height: 44px;
+  }
+
+  .qty-down,
+  .qty-up {
+    min-width: 44px;
+    min-height: 44px;
   }
 
   #selected-list {
