@@ -1,0 +1,664 @@
+/* ====================================
+   카페24 커스텀 옵션 UI 스타일
+   ==================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 커스텀 옵션 UI 컨테이너 */
+#custom-option-ui,
+.custom-option-ui {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.custom-option-ui .section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 24px;
+  padding: 0 24px;
+  padding-top: 24px;
+}
+
+/* ====================================
+   카드 그리드 레이아웃
+   ==================================== */
+
+#card-list,
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 0 24px 24px 24px;
+  background-color: #ffffff;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.card-item:hover {
+  background-color: #f5f5f5;
+  border-color: #dddddd;
+}
+
+.card-item.selected {
+  border-color: #ff6b35;
+  border-width: 2px;
+  background-color: #fff3ec;
+}
+
+.card-item.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #f0f0f0;
+  border-color: #eeeeee;
+}
+
+/* 카드 이미지 영역 */
+.card-image {
+  width: 100%;
+  height: 120px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 카드 텍스트 영역 */
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #333333;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 12px;
+  color: #999999;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+/* 카드 가격 */
+.card-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 8px;
+}
+
+/* 카드 뱃지 */
+.card-badge {
+  display: inline-block;
+  background-color: #ffe8dc;
+  color: #ff6b35;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* 카드 선택 버튼 */
+.card-select-btn {
+  background-color: #ff6b35;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  transition: background-color 0.2s ease-out;
+}
+
+.card-select-btn:hover {
+  background-color: #e55a2b;
+}
+
+.card-select-btn:active {
+  background-color: #cc4e24;
+}
+
+/* 선택 상태 체크마크 */
+.card-checkmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background-color: #ff6b35;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  font-weight: 700;
+}
+
+.card-item.selected .card-checkmark {
+  display: flex;
+}
+
+/* ====================================
+   선택 상품 목록
+   ==================================== */
+
+#selected-list,
+.selected-list {
+  margin: 24px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.selected-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: #333333;
+}
+
+#selected-items,
+.selected-items {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.selected-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 13px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-item:last-child {
+  border-bottom: none;
+}
+
+.selected-name {
+  flex: 1;
+  min-width: 100px;
+  color: #333333;
+  font-weight: 500;
+}
+
+.selected-price {
+  color: #ff6b35;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.selected-quantity {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-down,
+.qty-up {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  color: #666666;
+  border-radius: 2px;
+}
+
+.qty-down:hover,
+.qty-up:hover {
+  border-color: #ff6b35;
+  color: #ff6b35;
+}
+
+.selected-remove {
+  background: none;
+  border: none;
+  color: #999999;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.selected-remove:hover {
+  color: #ff6b35;
+}
+
+/* 선택 상품 합계 */
+.selected-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 12px;
+  border-top: 2px solid #333333;
+  color: #333333;
+}
+
+#total-price,
+.total-price {
+  color: #ff6b35;
+}
+
+/* ====================================
+   토스트 알림
+   ==================================== */
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2b2b2b;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideInUp 0.3s ease-out, slideOutDown 0.3s ease-out 2.7s forwards;
+}
+
+.toast.success::before {
+  content: '✓';
+  color: #34c759;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.toast.warning::before {
+  content: '!';
+  color: #ff3b30;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+/* ====================================
+   경고 배지 및 툴팁
+   ==================================== */
+
+.warning-badge {
+  display: inline-block;
+  background-color: #4b4b4b;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.warning-badge::before {
+  content: '!';
+  color: #ff3b30;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.limit-tooltip {
+  background-color: #4b4b4b;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.limit-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #4b4b4b;
+}
+
+/* ====================================
+   선택 요약 박스
+   ==================================== */
+
+.selected-summary {
+  background-color: #fff3ec;
+  border: 2px solid #ff6b35;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  position: relative;
+}
+
+.selected-summary-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.selected-summary-detail {
+  font-size: 12px;
+  color: #666666;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.selected-summary-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.selected-summary-quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.qty-btn:hover {
+  color: #ff6b35;
+}
+
+.qty-input {
+  width: 50px;
+  text-align: center;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.selected-summary-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff6b35;
+  white-space: nowrap;
+}
+
+.selected-summary-remove {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999999;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.selected-summary-remove:hover {
+  color: #ff6b35;
+}
+
+/* ====================================
+   반응형 디자인
+   ==================================== */
+
+/* 태블릿 (768px 이상 1024px 미만) */
+@media (max-width: 1023px) and (min-width: 769px) {
+  #card-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 16px 16px 16px;
+  }
+}
+
+/* 모바일 (480px 이상 768px 미만) */
+@media (max-width: 768px) {
+  .custom-option-ui .section-title {
+    padding: 16px 16px 0 16px;
+    margin-bottom: 16px;
+  }
+
+  #card-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 16px 16px 16px;
+  }
+
+  .card-item {
+    padding: 8px;
+  }
+
+  .card-image {
+    height: 100px;
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 13px;
+  }
+
+  .card-price {
+    font-size: 14px;
+  }
+
+  .card-select-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  #selected-list {
+    margin: 16px;
+    padding: 12px;
+  }
+
+  .selected-title {
+    font-size: 14px;
+  }
+
+  .selected-item {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  /* 바텀시트 구현 */
+  #custom-option-ui {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 16px 16px 0 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease-out;
+  }
+
+  #custom-option-ui::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .modal-handle {
+    width: 32px;
+    height: 4px;
+    background: #cccccc;
+    border-radius: 2px;
+    margin: 12px auto;
+    cursor: grab;
+    display: block;
+  }
+
+  .modal-handle:active {
+    cursor: grabbing;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666666;
+    padding: 8px;
+  }
+}
+
+/* 초소형 화면 (480px 이하) */
+@media (max-width: 480px) {
+  .custom-option-ui .section-title {
+    font-size: 16px;
+    padding: 12px 12px 0 12px;
+    margin-bottom: 12px;
+  }
+
+  #card-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0 12px 12px 12px;
+  }
+
+  .card-item {
+    padding: 8px;
+  }
+
+  .card-select-btn {
+    padding: 12px;
+    min-height: 44px;
+  }
+
+  #selected-list {
+    margin: 12px;
+    padding: 12px;
+  }
+
+  .selected-summary-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selected-summary-price {
+    text-align: right;
+  }
+}
+
+/* ====================================
+   유틸리티
+   ==================================== */
+
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}

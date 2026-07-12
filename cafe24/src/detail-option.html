@@ -1,0 +1,82 @@
+<!--
+  카페24 스마트디자인 /product/detail.html에 삽입할 커스텀 옵션 UI
+
+  주의사항:
+  1. 이 마크업 + option.css가 세트로 동작합니다
+  2. JavaScript 로직(카드 클릭 이벤트, 동기화)은 별도 파일에서 추가됩니다 (Phase 4)
+  3. 기본 카페24 옵션 요소는 display:none으로 숨기되 DOM은 삭제하지 않습니다
+  4. 카드 이미지는 placeholder입니다 (실제 상품 이미지로 교체 예정)
+-->
+
+<div id="custom-option-ui" class="custom-option-ui">
+
+  <h3 class="section-title">골라담기 상품 선택</h3>
+
+  <!-- 카드 리스트: 8개 옵션값 (PC에서 4열, MO에서 반응형) -->
+  <!-- JavaScript가 option.js의 renderCards()로부터 동적으로 렌더링합니다 -->
+  <div id="card-list" class="card-list">
+  </div>
+
+  <!-- 선택한 상품 목록 -->
+  <div id="selected-list" class="selected-list">
+    <h4 class="selected-title">선택한 상품</h4>
+    <div id="selected-items" class="selected-items">
+      <!-- JavaScript로 동적으로 채워집니다 -->
+      <!-- 구조 예시 (Phase 4에서 구현):
+      <div class="selected-item" data-option-value="30개입_1">
+        <span class="selected-name">30개입_1</span>
+        <span class="selected-price">+5,000원</span>
+        <div class="selected-quantity">
+          <button type="button" class="qty-down">-</button>
+          <input type="number" value="1" min="1" readonly>
+          <button type="button" class="qty-up">+</button>
+        </div>
+        <button type="button" class="selected-remove">삭제</button>
+      </div>
+      -->
+    </div>
+    <div class="selected-total">
+      <span class="total-label">합계</span>
+      <span id="total-price" class="total-price">0원</span>
+    </div>
+  </div>
+
+</div>
+
+<!--
+  기본 카페24 옵션 영역
+
+  주의: 아래 DOM은 카페24에서 자동 생성됩니다
+  삭제하지 말고 display:none으로 숨겨둡니다
+  JavaScript에서 선택/동기화 시에 이 기본 요소들을 조작합니다
+
+  예상 구조:
+  <div class="xans-product-option">
+    <div class="option-item">
+      <label>옵션 선택</label>
+      <select name="option1" id="product_option_id1">
+        <option value="">-- 옵션 선택 --</option>
+        <option value="10개입_1">10개입_1</option>
+        ...
+      </select>
+      또는
+      <ul class="btn-list">
+        <li><button>10개입_1</button></li>
+        ...
+      </ul>
+    </div>
+  </div>
+
+  이 기본 옵션이 보이려면 style="display:none;" 제거
+-->
+<style>
+  .xans-product-option {
+    display: none !important;
+  }
+</style>
+
+<!-- 외부 설정: 옵션 데이터 -->
+<script src="../config/optionConfig.js"></script>
+
+<!-- JavaScript 로직: 카드 동적 렌더링, 클릭 이벤트, 상태 동기화 -->
+<script src="option.js"></script>

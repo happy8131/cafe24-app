@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카페24 커스텀 옵션 UI - 프리뷰</title>
+  <link rel="stylesheet" href="option.css">
+  <style>
+    /* 프리뷰 페이지 전용 스타일 (카페24에는 포함 안 함) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #333333;
+    }
+
+    .preview-header {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .preview-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .preview-header p {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .preview-container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .product-image-area {
+      flex: 0 0 400px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .product-image-area img,
+    .product-image-placeholder {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .product-image-placeholder {
+      width: 300px;
+      height: 300px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .product-info-area {
+      flex: 1;
+      min-width: 500px;
+    }
+
+    .product-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+
+    .product-price {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ff6b35;
+      margin-bottom: 24px;
+    }
+
+    .product-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 24px 0;
+    }
+
+    .preview-info {
+      background-color: #fff3ec;
+      border: 1px solid #ffe8dc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .preview-info strong {
+      color: #ff6b35;
+      font-weight: 600;
+    }
+
+    /* 모바일 프리뷰용 */
+    @media (max-width: 768px) {
+      .preview-container {
+        flex-direction: column;
+      }
+
+      .product-image-area {
+        flex: auto;
+      }
+
+      .product-info-area {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-header">
+    <h1>🧪 카페24 커스텀 옵션 UI 프리뷰</h1>
+    <p>이 페이지는 로컬에서 스타일을 시각적으로 확인하기 위한 것입니다. 실제 카페24에는 이 파일을 업로드하지 않습니다.</p>
+  </div>
+
+  <div class="preview-container">
+
+    <!-- 좌측: 상품 이미지 영역 -->
+    <div class="product-image-area">
+      <img src="../img/image.png" alt="한끼통살 골라담기 떡볶이">
+    </div>
+
+    <!-- 우측: 상품 정보 + 커스텀 옵션 UI -->
+    <div class="product-info-area">
+
+      <h2 class="product-title">한끼통살 골라담기 떡볶이</h2>
+      <p class="product-price">24,700원</p>
+
+      <p class="product-description">
+        원하는 맛과 개입수를 선택해서 자신만의 골라담기 상품을 만들어보세요.
+        최저가로 즐기는 한끼 통살! 🌶️
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="preview-info">
+        <strong>⚠️ 프리뷰 정보:</strong>
+        <br>• 이 UI는 PC 화면(4열 그리드)에 최적화되어 있습니다
+        <br>• 창 너비를 줄여 모바일/태블릿 반응형을 확인할 수 있습니다
+        <br>• 아래의 "골라담기 상품 선택" 섹션이 커스텀 옵션 UI입니다
+        <br>• JavaScript 로직(클릭 이벤트, 상태 변경)은 Phase 4에서 추가됩니다
+      </div>
+
+      <!-- 여기서부터 실제 카페24 detail-option.html 마크업 -->
+
+      <div id="custom-option-ui" class="custom-option-ui">
+
+        <h3 class="section-title">골라담기 상품 선택</h3>
+
+        <!-- 카드 리스트: 8개 옵션값 (PC에서 4열, MO에서 반응형) -->
+        <!-- JavaScript가 option.js의 renderCards()로부터 동적으로 렌더링합니다 -->
+        <div id="card-list" class="card-list">
+        </div>
+
+        <!-- 선택한 상품 목록 -->
+        <div id="selected-list" class="selected-list">
+          <h4 class="selected-title">선택한 상품</h4>
+          <div id="selected-items" class="selected-items">
+            <!-- JavaScript로 동적으로 채워집니다 -->
+          </div>
+          <div class="selected-total">
+            <span class="total-label">합계</span>
+            <span id="total-price" class="total-price">0원</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 여기까지 detail-option.html -->
+
+      <div class="divider"></div>
+
+      <div style="background-color: #e8f5e9; padding: 16px; border-radius: 8px; font-size: 13px; color: #333; margin-top: 24px;">
+        <strong style="color: #2e7d32;">✅ Phase 4 완료:</strong>
+        <br>• ✓ JavaScript 로직 구현 (option.js)
+        <br>• ✓ 카드 동적 렌더링 (renderCards)
+        <br>• ✓ 카드 클릭 이벤트, 중복방지, 횟수제한
+        <br>• ✓ 선택 목록 동기화, 수량 조절, 삭제 기능
+        <br>• ✓ 금액 계산 (Σ price × quantity)
+        <br>• ✓ 토스트 알림 (성공/경고)
+        <br>
+        <br><strong style="color: #2e7d32;">📝 다음 단계 (Phase 5):</strong>
+        <br>• optionConfig를 별도 파일(optionConfig.js)로 분리
+        <br>• 실제 카페24 스마트디자인 환경에서 검증
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 외부 설정: 옵션 데이터 -->
+  <script src="../config/optionConfig.js"></script>
+
+  <!-- JavaScript 로직: 카드 동적 렌더링, 클릭 이벤트, 상태 동기화 -->
+  <script src="option.js"></script>
+
+</body>
+</html>
