@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# submission archives (제출용 압축 파일)
+cafe24-submission.zip
