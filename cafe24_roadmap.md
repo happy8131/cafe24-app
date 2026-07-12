@@ -307,4 +307,3 @@ Phase 7: 제출 준비 (0.5시간)
 
 - 진행 중 막히는 부분: 이메일로 편하게 문의
 - 피그마 시안 링크: https://www.figma.com/design/Mix9lnBDClaeNNhDpTuho2/
-- 제출 기한: 테스트 안내 후 영업일 기준 2일
