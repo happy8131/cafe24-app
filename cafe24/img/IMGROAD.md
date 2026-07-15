@@ -4,8 +4,6 @@
 개입 수 선택시 ./DETAIL PAGE (2).png , ./DETAIL PAGE(3).png , ./DETAIL PAGE (4).png
 맛 선택 완료 ./DETAIL PAGE (5).png
 
-
-
 *모바일용(mo)*
 상세페이지(기본) ./DETAIL PAGE.png
 옵션 ./png.png
