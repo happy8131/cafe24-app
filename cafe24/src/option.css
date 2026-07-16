@@ -558,39 +558,23 @@
     padding: 6px;
   }
 
-  /* 바텀시트 구현 */
+  /* 모바일: 일반 블록 레이아웃 (구매 버튼이 보이도록) */
   #custom-option-ui {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
     background: #ffffff;
-    border-radius: 16px 16px 0 0;
-    max-height: 80vh;
-    overflow-y: auto;
-    z-index: 1000;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideUp 0.3s ease-out;
+    border-radius: 0;
+    max-height: none;
+    overflow-y: visible;
+    z-index: 1;
+    box-shadow: none;
+    animation: none;
   }
 
   #custom-option-ui::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+    display: none;
   }
 
   .modal-handle {
