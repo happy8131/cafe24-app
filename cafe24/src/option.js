@@ -29,20 +29,58 @@ const CustomOptionUI = {
   init() {
     if (typeof optionConfig === 'undefined') {
       console.error(
-        '[CustomOptionUI] 초기화 실패: optionConfig가 정의되지 않았습니다.\n' +
-        '원인: cafe24/config/optionConfig.js가 로드되지 않았거나 option.js보다 먼저 로드되지 않았습니다.\n' +
-        '해결방법: HTML에서 스크립트 로드 순서를 확인하세요:\n' +
-        '  <script src="cafe24/config/optionConfig.js"></script>\n' +
-        '  <script src="cafe24/src/option.js"></script>'
+        '[CustomOptionUI] optionConfig가 정의되지 않았습니다.'
       );
       return;
     }
 
     this.config = optionConfig;
     this.state.selectedItems = [];
+
+    // 카페24 기본 옵션 관련 요소 모두 숨기기
+    this.hideDefaultOptionElements();
+
     this.renderCards();
     this.attachEventListeners();
     console.log('[CustomOptionUI] Initialized', { optionCount: this.config.options.length });
+  },
+
+  hideDefaultOptionElements() {
+    const selectors = [
+      '.xans-product-option',
+      'table[module="product_option"]',
+      'dl[module="product_quantity"]',
+      'div[module="product_quantity"]',
+      '[module="product_option"]',
+      '[module="product_quantity"]',
+      '[module="product_setproduct"]',
+      '[module="product_addoption"]',
+      '.guideArea',
+      '.option_box',
+      '.option_box_area',
+      '.totalProducts',
+      '.product-select',
+      '.productSet',
+      '.additional',
+      '.ec-base-desc.quantity',
+      '[class*="option_box"]',
+      '[class*="totalProducts"]',
+      '[class*="sampleProduct"]',
+      '[class*="product_quantity"]',
+    ];
+
+    selectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        el.style.display = 'none !important';
+      });
+    });
+
+    // 카페24 기본 옵션 영역 전체 숨기기
+    const productDetailModule = document.querySelector('[module="product_detaildesign"]');
+    if (productDetailModule) {
+      productDetailModule.style.display = 'none !important';
+    }
   },
 
   // ----
@@ -322,13 +360,11 @@ const CustomOptionUI = {
 
   attachEventListeners() {
     // 기본 옵션 변경 감지 (양방향 동기화용, 실 카페24 환경)
-    // select 방식: change 이벤트 감지
     const defaultSelect = document.querySelector('.xans-product-option select');
     if (defaultSelect) {
       defaultSelect.addEventListener('change', () => this.syncFromDefaultOption());
     }
 
-    // 텍스트버튼 방식: click 이벤트 감지 (data-option-value 속성을 가진 모든 버튼)
     const defaultButtons = document.querySelectorAll('.xans-product-option [data-option-value]');
     defaultButtons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
@@ -350,4 +386,69 @@ const CustomOptionUI = {
 
 document.addEventListener('DOMContentLoaded', () => {
   CustomOptionUI.init();
+
+  setTimeout(() => {
+    const defaultSelect = document.querySelector('.xans-product-option select');
+    if (defaultSelect) {
+      defaultSelect.value = '';
+      defaultSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }, 100);
+
+  // ====================================
+  // 옵션 선택 필수 검증
+  // ====================================
+
+  // 구매 버튼 검증
+  const validateOptionOnPurchase = () => {
+    if (CustomOptionUI.state.selectedItems.length === 0) {
+      CustomOptionUI.showToast('옵션을 선택해주세요', 'warning');
+      return false;
+    }
+    return true;
+  };
+
+  // BUY IT NOW 버튼
+  const buyButton = document.querySelector('a.btnSubmit[onclick*="action_buy"], .xans-product-action-order');
+  if (buyButton) {
+    buyButton.addEventListener('click', (e) => {
+      if (!validateOptionOnPurchase()) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  }
+
+  // CARTs 버튼 (일반)
+  const cartButtons = document.querySelectorAll('.actionCart, [onclick*="action_basket"]');
+  cartButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      if (!validateOptionOnPurchase()) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  });
+
+  // 고정 위치 구매 버튼
+  const fixedBuyButton = document.querySelector('#orderFixArea .btnSubmit');
+  if (fixedBuyButton) {
+    fixedBuyButton.addEventListener('click', (e) => {
+      if (!validateOptionOnPurchase()) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  }
+
+  const fixedCartButton = document.querySelector('#orderFixArea .actionCart');
+  if (fixedCartButton) {
+    fixedCartButton.addEventListener('click', (e) => {
+      if (!validateOptionOnPurchase()) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  }
+    
 });
